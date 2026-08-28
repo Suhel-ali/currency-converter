@@ -1,0 +1,226 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Your CSS -->
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}">
+
+    <title>
+        {% block title %}
+            UrCurrency
+        {% endblock %}
+    </title>
+
+</head>
+
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
+
+        <div class="container">
+
+            <!-- Website name -->
+
+            <a
+                class="navbar-brand fw-bold"
+                href="{% url 'home' %}">
+                UrCurrency
+            </a>
+
+
+            <!-- Hamburger button -->
+
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+
+            <!-- Navigation links -->
+
+            <div
+                class="collapse navbar-collapse"
+                id="mainNavbar">
+
+                <ul class="navbar-nav ms-auto">
+
+                    <!-- Home -->
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="{% url 'home' %}">
+                            Home
+                        </a>
+
+                    </li>
+
+
+                    {% if user.is_authenticated %}
+
+                    <!-- History -->
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="{% url 'history' %}">
+                            History
+                        </a>
+
+                    </li>
+
+
+                    <!-- Favourites -->
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="{% url 'favourites' %}">
+                            Favourites
+                        </a>
+
+                    </li>
+
+
+                    <!-- Profile -->
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="{% url 'profile' %}">
+                            Profile
+                        </a>
+
+                    </li>
+
+
+                    <!-- Contact -->
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="{% url 'contact' %}">
+                            Contact Us
+                        </a>
+
+                    </li>
+
+
+                    <!-- Feedback -->
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="{% url 'feedback' %}">
+                            Feedback
+                        </a>
+
+                    </li>
+
+
+                    <!-- Logout -->
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link text-danger"
+                            href="{% url 'logout' %}">
+                            Logout
+                        </a>
+
+                    </li>
+
+
+                    {% else %}
+
+
+                    <!-- Login -->
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="{% url 'login' %}">
+                            Login
+                        </a>
+
+                    </li>
+
+
+                    <!-- Register -->
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="{% url 'register' %}">
+                            Register
+                        </a>
+
+                    </li>
+
+
+                    {% endif %}
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= PAGE CONTENT ================= -->
+
+    <main>
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+
+    <!-- Bootstrap JavaScript -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+</body>
+
+</html>
