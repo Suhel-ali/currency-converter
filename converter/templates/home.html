@@ -14,9 +14,17 @@ Home
 
             <!-- Heading -->
 
-            <div class="text-center mb-4">
+           
 
-                <h1 class="fw-bold">
+
+            <!-- Converter Card -->
+
+            <div class="card shadow-sm ">
+
+                <div class="card-body p-4">
+                     <div class="text-center mb-4">
+
+                <h1 class="fw-bold text-success">
                     Currency Converter
                 </h1>
 
@@ -27,14 +35,7 @@ Home
             </div>
 
 
-            <!-- Converter Card -->
-
-            <div class="card shadow-sm">
-
-                <div class="card-body p-4">
-
-
-                    {% if user.is_authenticated %}
+                   
 
                         <!-- Converter Form -->
 
@@ -50,9 +51,7 @@ Home
 
                             <div class="mb-3">
 
-                                <label class="form-label">
-                                    Amount
-                                </label>
+                               
 
                                 <input
                                     type="number"
@@ -71,9 +70,7 @@ Home
 
                             <div class="mb-3">
 
-                                <label class="form-label">
-                                    From Currency
-                                </label>
+                               
 
                                 <select
                                     name="from_currency"
@@ -102,9 +99,7 @@ Home
 
                             <div class="mb-3">
 
-                                <label class="form-label">
-                                    To Currency
-                                </label>
+                               
 
                                 <select
                                     name="to_currency"
@@ -141,7 +136,7 @@ Home
                         </form>
 
 
-                    {% else %}
+                 {% comment %}  {% else %} 
 
                         <!-- Guest Message -->
 
@@ -173,34 +168,39 @@ Home
                             </a>
 
                         </div>
+                       
 
                     {% endif %}
-
+                    {% endcomment %} 
+                    
 
                     <!-- Conversion Result -->
 
-                    {% if result %}
+                   {% if result %}
 
     <hr class="my-4">
 
     <div class="text-center">
 
-        <p class="text-muted mb-1">
-            Converted Amount
+        <p class="text-muted mb-2">
+            Conversion Result
         </p>
 
-        <h2 class="fw-bold">
-            {{ result|floatformat:2 }}
-            {{ to_currency }}
+        <h2 class="fw-bold mb-3">
+            {{ result|floatformat:2 }} {{ to_currency }}
         </h2>
 
-        <p class="text-muted">
+        <p class="fs-5 mb-2">
+            {{ amount|floatformat:2 }} {{ from_currency }}
+            =
+            {{ result|floatformat:2 }} {{ to_currency }}
+        </p>
 
+        <p class="text-muted mb-3">
             1 {{ from_currency }}
             =
-            {{ rate }}
+            {{ rate|floatformat:5 }}
             {{ to_currency }}
-
         </p>
 
 
@@ -236,7 +236,13 @@ Home
         </form>
 
     </div>
-
+    
 {% endif %}
+{% endblock %}
+
+{% block content1 %}
+<marquee behavior="scroll" direction="left">
+    <h3>Welcome to the Currency Converter!</h3>
+</marquee>
 
 {% endblock %}

@@ -4,13 +4,16 @@
 History
 {% endblock %}
 
+
 {% block content %}
 
 <div class="container mt-5">
 
-    <div class="text-center mb-4">
+    <!-- ================= HEADING ================= -->
 
-        <h1 class="fw-bold">
+    <div class="text-start ms-1 mr-2">
+
+        <h1 class="fw-bold text-info-emphasis">
             Conversion History
         </h1>
 
@@ -21,21 +24,24 @@ History
     </div>
 
 
+    <!-- ================= HISTORY ================= -->
+
     {% if conversions %}
 
-        <div class="table-responsive">
+        <div class="table-responsive mt-4">
 
-            <table class="table table-bordered table-hover align-middle">
+            <table class="table table-bordered">
 
-                <thead class="table-light">
+                <thead>
 
                     <tr>
+
                         <th>Date</th>
+                        <th>Amount</th>
                         <th>From</th>
                         <th>To</th>
-                        <th>Amount</th>
-                        <th>Rate</th>
-                        <th>Converted Amount</th>
+                        <th>Converted</th>
+
                     </tr>
 
                 </thead>
@@ -48,7 +54,11 @@ History
                         <tr>
 
                             <td>
-                                {{ conversion.conversion_date|date:"d M Y, H:i" }}
+                                {{ conversion.conversion_date }}
+                            </td>
+
+                            <td>
+                                {{ conversion.amount }}
                             </td>
 
                             <td>
@@ -60,15 +70,7 @@ History
                             </td>
 
                             <td>
-                                {{ conversion.amount|floatformat:2 }}
-                            </td>
-
-                            <td>
-                                {{ conversion.rate|floatformat:4 }}
-                            </td>
-
-                            <td class="fw-bold">
-                                {{ conversion.converted_amount|floatformat:2 }}
+                                {{ conversion.converted_amount }}
                             </td>
 
                         </tr>
@@ -84,24 +86,39 @@ History
 
     {% else %}
 
-        <div class="text-center mt-5">
 
-            <h4>
-                No conversion history
-            </h4>
+        <!-- ================= NO HISTORY ================= -->
 
-            <p class="text-muted">
-                Your conversions will appear here.
-            </p>
+        <div class="row justify-content-center mt-5">
 
-            <a
-                href="{% url 'home' %}"
-                class="btn btn-primary"
-            >
-                Start Converting
-            </a>
+            <div class="col-md-6 text-center">
+
+                <h3 class="text-secondary mt-5">
+
+                    No conversion history
+
+                </h3>
+
+                <p class="text-muted">
+
+                    Your conversions will appear here.
+
+                </p>
+
+
+                <a
+                    href="{% url 'home' %}"
+                    class="btn btn-primary"
+                >
+
+                    Start Converting
+
+                </a>
+
+            </div>
 
         </div>
+
 
     {% endif %}
 

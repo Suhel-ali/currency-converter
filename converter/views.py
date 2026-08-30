@@ -115,48 +115,125 @@ def register(request):
 
 # ---------------- LOGIN ----------------
 
+# ---------------- LOGIN ----------------
+
 def login_view(request):
 
     if request.user.is_authenticated:
         return redirect("home")
 
-    if request.method == "POST":
 
-        username = request.POST.get("username")
-        password = request.POST.get("password")
+    # =========================================
+    # GET REQUEST
+    # =========================================
 
-        user = authenticate(
-            request,
-            username=username,
-            password=password
-        )
+    if request.method == "GET":
 
-        if user is not None:
+        next_page = request.GET.get("next")
 
-            login(request, user)
+        message = None
 
-            return redirect("home")
+
+        # User is trying to access favourites
+
+        if next_page and next_page.startswith("/favourites"):
+
+            message = (
+                "You need to login to use "
+                "Favourite Currencies."
+            )
+
+
+        # User is trying to access history
+
+        elif next_page and next_page.startswith("/history"):
+
+            message = (
+                "You need to login to view "
+                "your Conversion History."
+            )
+
+
+        # User is trying to access feedback
+
+        elif next_page and next_page.startswith("/feedback"):
+
+            message = (
+                "You need to login to submit "
+                "Feedback."
+            )
+
+
+        # User is trying to access profile
+
+        elif next_page and next_page.startswith("/profile"):
+
+            message = (
+                "You need to login to view "
+                "your Profile."
+            )
+
+
+        # User is trying to access contact
+
+        elif next_page and next_page.startswith("/contact"):
+
+            message = (
+                "You need to login to Contact Us."
+            )
+
 
         return render(
             request,
             "login.html",
             {
-                "error": "Invalid username or password."
+                "message": message,
+                "next_page": next_page
             }
         )
 
-    return render(request, "login.html")
+
+    # =========================================
+    # POST REQUEST
+    # =========================================
+
+    username = request.POST.get("username")
+    password = request.POST.get("password")
+
+    user = authenticate(
+        request,
+        username=username,
+        password=password
+    )
 
 
-# ---------------- LOGOUT ----------------
+    if user is not None:
 
-def logout_view(request):
+        login(request, user)
 
-    logout(request)
-
-    return redirect("home")
+        next_page = request.POST.get("next")
 
 
+        if next_page:
+
+            return redirect(next_page)
+
+
+        return redirect("home")
+
+
+    # =========================================
+    # INVALID LOGIN
+    # =========================================
+
+    return render(
+        request,
+        "login.html",
+        {
+            "error": "Invalid username or password.",
+            "next_page": request.POST.get("next")
+        }
+    )
 # ---------------- PROFILE ----------------
 
 @login_required
@@ -188,7 +265,7 @@ def profile(request):
 
 # ---------------- CONVERT CURRENCY ----------------
 
-@login_required
+
 def convert_currency(request):
 
     if request.method != "POST":
@@ -228,14 +305,14 @@ def convert_currency(request):
         # Calculate conversion
         converted_amount = amount * rate
 
-        # Save conversion
-        Conversion.objects.create(
-            user=request.user,
-            from_currency=from_currency,
-            to_currency=to_currency,
-            amount=amount,
-            rate=rate,
-            converted_amount=converted_amount
+        if request.user.is_authenticated:   
+            Conversion.objects.create(
+                user=request.user,
+                from_currency=from_currency,
+                to_currency=to_currency,
+                amount=amount,
+                rate=rate,
+                converted_amount=converted_amount
         )
 
         return render(
@@ -309,22 +386,27 @@ def favourites(request):
 
 
 # ---------------- ADD FAVOURITE ----------------
-
-@login_required
+@login_required(login_url="/login/")
 def add_favourite(request):
 
-    if request.method == "POST":
+    try:
 
-        from_currency = request.POST.get("from_currency")
-        to_currency = request.POST.get("to_currency")
+        if request.method == "POST":
 
-        if from_currency and to_currency:
+            from_currency = request.POST.get("from_currency")
+            to_currency = request.POST.get("to_currency")
 
-            Favourite.objects.get_or_create(
-                user=request.user,
-                from_currency=from_currency,
-                to_currency=to_currency
-            )
+            if from_currency and to_currency:
+
+                Favourite.objects.get_or_create(
+                    user=request.user,
+                    from_currency=from_currency,
+                    to_currency=to_currency
+                )
+
+    except Exception as e:
+
+        print(f"Error adding favourite: {e}")
 
     return redirect("favourites")
 
@@ -439,3 +521,10 @@ def feedback(request):
         request,
         "feedback.html"
     )
+    # ---------------- LOGOUT ----------------
+
+def logout_view(request):
+
+    logout(request)
+
+    return redirect("home")

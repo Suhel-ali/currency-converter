@@ -29,6 +29,17 @@ Login
                     <form method="POST">
 
                         {% csrf_token %}
+                        {% if message %}
+
+    <div class="alert alert-warning">
+
+        <i class="bi bi-lock-fill me-2"></i>
+
+        {{ message }}
+
+    </div>
+
+{% endif %}
 
                         <div class="mb-3">
 
@@ -91,5 +102,15 @@ Login
     </div>
 
 </div>
+
+{% if next_page %}
+
+    <input
+        type="hidden"
+        name="next"
+        value="{{ next_page }}"
+    >
+
+{% endif %}
 
 {% endblock %}
