@@ -186,17 +186,18 @@ Home
             Conversion Result
         </p>
 
-        <h2 class="fw-bold mb-3">
+        <h2 class="fw-bold mb-3 text-dark-emphasis">
+            
             {{ result|floatformat:2 }} {{ to_currency }}
         </h2>
 
-        <p class="fs-5 mb-2">
+        <p class="fs-5 mb-2 text-dark-emphasis">
             {{ amount|floatformat:2 }} {{ from_currency }}
             =
             {{ result|floatformat:2 }} {{ to_currency }}
         </p>
 
-        <p class="text-muted mb-3">
+        <p class="text-muted mb-3 text-dark-emphasis">
             1 {{ from_currency }}
             =
             {{ rate|floatformat:5 }}
@@ -240,9 +241,5 @@ Home
 {% endif %}
 {% endblock %}
 
-{% block content1 %}
-<marquee behavior="scroll" direction="left">
-    <h3>Welcome to the Currency Converter!</h3>
-</marquee>
 
-{% endblock %}
+

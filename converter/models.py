@@ -54,15 +54,7 @@ class Feedback(models.Model):
         return self.user.username
 
 
-class ContactMessage(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    subject = models.CharField(max_length=200)
-    message = models.TextField()
-    submitted_date = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.subject
 
 class Feedback(models.Model):
 

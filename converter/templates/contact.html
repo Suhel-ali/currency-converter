@@ -4,17 +4,21 @@
 Contact Us
 {% endblock %}
 
+
 {% block content %}
 
-<div class="container-fluid mt-5">
+<div class="container mt-5">
 
-    <div class="row justify-content-center ">
+    <div class="row justify-content-center">
 
-        <div class="col-md-6">
+        <div class="col-md-7 col-lg-6">
 
-            <div class="card shadow-sm bg-success-subtle ">
+            <div class="card shadow-sm">
 
                 <div class="card-body p-4">
+
+
+                    <!-- Heading -->
 
                     <div class="text-center mb-4">
 
@@ -23,69 +27,114 @@ Contact Us
                         </h2>
 
                         <p class="text-muted">
-                            Have a question or problem?
-                            Send us a message.
+                            Have a question or want to get in touch?
                         </p>
 
                     </div>
 
 
-                    {% if error %}
+                    <!-- Email -->
 
-                        <div class="alert alert-danger">
-                            {{ error }}
-                        </div>
+                    <div class="d-flex align-items-center border rounded p-3 mb-3">
 
-                    {% endif %}
+                        <i class="bi bi-envelope-fill fs-3 text-primary me-3"></i>
 
+                        <div>
 
-                    <form method="POST">
+                            <h6 class="mb-1">
+                               Email
+                            </h6>
 
-                        {% csrf_token %}
-
-
-                        <div class="mb-3">
-
-                            <label class="form-label">
-                                Subject
-                            </label>
-
-                            <input
-                                type="text"
-                                name="subject"
-                                class="form-control"
-                                placeholder="Enter subject"
-                                required
+                            <a
+                                href="mailto:Joyysohel@gmail.com"
+                                class="text-decoration-none"
                             >
+                                Joyysohel@gmail.com
+                            </a>
 
                         </div>
 
+                    </div>
 
-                        <div class="mb-3">
 
-                            <label class="form-label">
-                                Message
-                            </label>
+                    <!-- Phone -->
 
-                            <textarea
-                                name="message"
-                                class="form-control"
-                                rows="5"
-                                placeholder="Write your message..."
-                                required
-                            ></textarea>
+                    <div class="d-flex align-items-center border rounded p-3 mb-3">
+
+                        <i class="bi bi-telephone-fill fs-3 text-success me-3"></i>
+
+                        <div>
+
+                            <h6 class="mb-1">
+                              Mobile
+                            </h6>
+
+                            <a
+                                href="tel:+918975100965"
+                                class="text-decoration-none"
+                            >
+                                +91 8975100965
+                            </a>
 
                         </div>
 
+                    </div>
 
-                        <button
-                            type="submit"
-                            class="btn btn-primary w-100"
-                        >
-                            Send Message
-                        </button>
 
-                    </form>
+                    <!-- Instagram -->
+
+                    <div class="d-flex align-items-center border rounded p-3 mb-3">
+
+                        <i class="bi bi-instagram fs-3 text-danger me-3"></i>
+
+                        <div>
+
+                            <h6 class="mb-1">
+                                Instagram
+                            </h6>
+
+                            <a
+                                href="https://www.instagram.com/suhel.ali._"
+                                target="_blank"
+                                class="text-decoration-none"
+                            >
+                                @suhel.ali._
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Location -->
+
+                    <div class="d-flex align-items-center border rounded p-3">
+
+                        <i class="bi bi-geo-alt-fill fs-3 text-warning me-3"></i>
+
+                        <div>
+
+                            <h6 class="mb-1">
+                                Location
+                            </h6>
+
+                            <span class="text-muted">
+                                Latur
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Closing message -->
+
+                    <p class="text-center text-muted mt-4 mb-0">
+
+                        We would be happy to hear from you.
+
+                    </p>
+
 
                 </div>
 

@@ -5,7 +5,7 @@ from .models import (
     Conversion,
     Favourite,
     Feedback,
-    ContactMessage
+    
 )
 
 
@@ -65,22 +65,3 @@ class FeedbackAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(ContactMessage)
-class ContactMessageAdmin(admin.ModelAdmin):
-
-    list_display = (
-        "user",
-        "subject",
-        "message",
-        "submitted_date",
-    )
-
-    list_filter = (
-        "submitted_date",
-    )
-
-    search_fields = (
-        "user__username",
-        "subject",
-        "message",
-    )
