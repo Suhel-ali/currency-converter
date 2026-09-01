@@ -6,7 +6,7 @@ Home
 
 {% block content %}
 
-<div class="container mt-5">
+<div class="container">
 
     <div class="row justify-content-center">
 
@@ -54,13 +54,16 @@ Home
                                
 
                                 <input
-                                    type="number"
-                                    name="amount"
-                                    class="form-control"
-                                    step="0.01"
-                                    min="0.01"
-                                    placeholder="Enter amount"
-                                    required
+                                   <input
+                                        type="number"
+                                        name="amount"
+                                        class="form-control"
+                                        step="0.01"
+                                        min="0.01"
+                                        placeholder="Enter amount"
+                                        value="{{ amount|default:'' }}"
+                                        required
+                                          
                                 >
 
                             </div>
@@ -68,73 +71,114 @@ Home
 
                             <!-- From Currency -->
 
-                            <div class="mb-3">
+                           <!-- ================= CURRENCY SELECTION ================= -->
 
-                               
+<div class="row align-items-end g-3">
 
-                                <select
-                                    name="from_currency"
-                                    class="form-select"
-                                    required
-                                >
+    <!-- From Currency -->
 
-                                    <option value="">
-                                        Select currency
-                                    </option>
+    <div class="col-md-5">
 
-                                    {% for currency in currencies %}
+        <label class="form-label fw-semibold">
+            From Currency
+        </label>
 
-                                        <option value="{{ currency.iso_code }}">
-                                            {{ currency.iso_code }} - {{ currency.name }}
-                                        </option>
+        <select
+            name="from_currency"
+            id="fromCurrency"
+            class="form-select"
+            required
+        >
 
-                                    {% endfor %}
+            {% for currency in currencies %}
 
-                                </select>
+                <option
+                    value="{{ currency.iso_code }}"
+                    {% if from_currency == currency.iso_code or not from_currency and currency.iso_code == "USD" %}
+                        selected
+                    {% endif %}
+                >
 
-                            </div>
+                    {{ currency.iso_code }} - {{ currency.name }}
+
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+    </div>
 
 
-                            <!-- To Currency -->
+    <!-- ================= SWAP BUTTON ================= -->
 
-                            <div class="mb-3">
+    <div class="col-md-2 text-center">
 
-                               
+        <button
+            type="button"
+            id="swapButton"
+            class="btn btn-outline-primary rounded-circle"
+            title="Swap currencies"
+        >
 
-                                <select
-                                    name="to_currency"
-                                    class="form-select"
-                                    required
-                                >
+            <i class="bi bi-arrow-left-right"></i>
 
-                                    <option value="">
-                                        Select currency
-                                    </option>
+        </button>
 
-                                    {% for currency in currencies %}
+    </div>
 
-                                        <option value="{{ currency.iso_code }}">
-                                            {{ currency.iso_code }} - {{ currency.name }}
-                                        </option>
 
-                                    {% endfor %}
+    <!-- To Currency -->
 
-                                </select>
+    <div class="col-md-5">
 
-                            </div>
+        <label class="form-label fw-semibold">
+            To Currency
+        </label>
 
+        <select
+            name="to_currency"
+            id="toCurrency"
+            class="form-select"
+            required
+        >
+
+            {% for currency in currencies %}
+
+                <option
+                    value="{{ currency.iso_code }}"
+                    {% if to_currency == currency.iso_code or not to_currency and currency.iso_code == "INR" %}
+                        selected
+                    {% endif %}
+                >
+
+                    {{ currency.iso_code }} - {{ currency.name }}
+
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+    </div>
+
+</div>
 
                             <!-- Convert Button -->
 
-                            <button
-                                type="submit"
-                                class="btn btn-primary w-100"
-                            >
-                                Convert
-                            </button>
+
+                            <div class="d-grid mt-4">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary"
+                                >
+                                    Convert
+                                </button>
+
+                            </div>
 
                         </form>
-
 
                  {% comment %}  {% else %} 
 
@@ -239,6 +283,40 @@ Home
     </div>
     
 {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <script>
+
+    const fromCurrency =
+        document.getElementById("fromCurrency");
+
+    const toCurrency =
+        document.getElementById("toCurrency");
+
+    const swapButton =
+        document.getElementById("swapButton");
+
+
+    swapButton.addEventListener("click", function () {
+
+        const temporaryValue =
+            fromCurrency.value;
+
+        fromCurrency.value =
+            toCurrency.value;
+
+        toCurrency.value =
+            temporaryValue;
+
+    });
+
+</script>
 {% endblock %}
 
 
